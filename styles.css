@@ -315,3 +315,50 @@ footer {
   border-color: #007acc;
   background-color: #f0f8ff;
 }
+
+/* =============================================== */
+/* ==       SOLUCIÓN PARA DISEÑO RESPONSIVO       == */
+/* =============================================== */
+/* Estos estilos se aplicarán solo en pantallas de 992px de ancho o menos (tablets y celulares) */
+
+@media (max-width: 992px) {
+  
+  /* Hacemos los títulos un poco más pequeños para que quepan mejor */
+  .titulo-principal {
+    font-size: 3.5em;
+  }
+  .subtitulo {
+    font-size: 2em;
+  }
+
+  /* Cambiamos la cuadrícula de electivos para que sea más flexible */
+  .grid-electivos {
+    /* En lugar de 7 columnas fijas, creamos columnas automáticas que tengan un mínimo de 200px */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+
+/* Estos estilos se aplicarán solo en pantallas de 768px de ancho o menos (celulares) */
+@media (max-width: 768px) {
+
+  /* Apilamos los niveles uno encima del otro */
+  #contenedor-malla {
+    flex-direction: column; /* Cambiamos la dirección a vertical */
+    align-items: center;    /* Centramos los niveles */
+    overflow-x: hidden;     /* Quitamos el scroll horizontal que ya no es necesario */
+  }
+
+  .nivel {
+    width: 90%; /* Hacemos que cada nivel ocupe el 90% del ancho del celular */
+    min-width: unset; /* Quitamos el ancho mínimo que ya no aplica */
+  }
+
+  /* Hacemos los títulos aún más pequeños en celulares */
+  .titulo-principal {
+    font-size: 2.5em;
+  }
+  .subtitulo {
+    font-size: 1.5em;
+  }
+}
