@@ -12,18 +12,28 @@
     <h1 class="titulo-principal">MALLA CURRICULAR</h1>
     <h2 class="subtitulo">INGENIERÍA DE SISTEMAS</h2>
     </header>
+
+    <section class="progreso-carrera">
+      <div class="info-progreso">
+        <span>Progreso Total:</span>
+        <span id="porcentaje-progreso">0%</span>
+      </div>
+      <div class="barra-externa">
+        <div id="barra-interna" class="barra-interna"></div>
+      </div>
+    </section>
   
 <main id="contenedor-malla">
   
     <section class="nivel">
     <h3>NIVEL 1</h3>
     <ul>
-      <li data-id="matematica-basica" class="generales" onclick="toggleCurso(this)">MATEMÁTICA BÁSICA <span class="creditos">5</span></li>
-      <li data-id="metodologia" class="generales" onclick="toggleCurso(this)">METODOLOGÍAS DE INVESTIGACIÓN <span class="creditos">3</span></li>
-      <li data-id="desarrollo-personal" class="generales" onclick="toggleCurso(this)">DESARROLLO PERSONAL Y SOCIAL <span class="creditos">3</span></li>
-      <li data-id="lenguaje-1" class="generales" onclick="toggleCurso(this)">LENGUAJE Y COMUNICACIÓN I <span class="creditos">4</span></li>
-      <li data-id="intro-ingenieria" class="generales" onclick="toggleCurso(this)">INTRODUCCIÓN A LA INGENIERÍA <span class="creditos">3</span></li>
-      <li data-id="etica" class="generales" onclick="toggleCurso(this)">ÉTICA CÍVICA <span class="creditos">2</span></li>
+      <li data-id="matematica-basica" class="generales"><button onclick="toggleCurso(this.parentElement)">MATEMÁTICA BÁSICA <span class="creditos">5</span></button></li>
+      <li data-id="metodologia" class="generales"><button onclick="toggleCurso(this.parentElement)">METODOLOGÍAS DE INVESTIGACIÓN <span class="creditos">3</span></button></li>
+      <li data-id="desarrollo-personal" class="generales"><button onclick="toggleCurso(this.parentElement)">DESARROLLO PERSONAL Y SOCIAL <span class="creditos">3</span></button></li>
+      <li data-id="lenguaje-1" class="generales"><button onclick="toggleCurso(this.parentElement)">LENGUAJE Y COMUNICACIÓN I <span class="creditos">4</span></button></li>
+      <li data-id="intro-ingenieria" class="generales"><button onclick="toggleCurso(this.parentElement)">INTRODUCCIÓN A LA INGENIERÍA <span class="creditos">3</span></button></li>
+      <li data-id="etica" class="generales"><button onclick="toggleCurso(this.parentElement)">ÉTICA CÍVICA <span class="creditos">2</span></button></li>
     </ul>
     <p class="total-creditos">Créditos obligatorios: 20</p>
     </section>
@@ -31,12 +41,12 @@
     <section class="nivel">
     <h3>NIVEL 2</h3>
     <ul>
-      <li data-id="calculo-1" class="generales" onclick="toggleCurso(this)">CÁLCULO I <span class="creditos">5</span></li>
-      <li data-id="economia" class="generales" onclick="toggleCurso(this)">ECONOMÍA Y EMPRESA <span class="creditos">3</span></li>
-      <li data-id="algebra" class="generales" onclick="toggleCurso(this)">ÁLGEBRA LINEAL <span class="creditos">3</span></li>
-      <li data-id="filosofia" class="generales" onclick="toggleCurso(this)">TEMAS DE FILOSOFÍA <span class="creditos">3</span></li>
-      <li data-id="lenguaje-2" class="generales" onclick="toggleCurso(this)">LENGUAJE Y COMUNICACIÓN II <span class="creditos">3</span></li>
-      <li data-id="procesos-sociales" class="generales" onclick="toggleCurso(this)">PROCESOS SOCIALES Y POLÍTICOS <span class="creditos">3</span></li>
+      <li data-id="calculo-1" class="generales"><button onclick="toggleCurso(this.parentElement)">CÁLCULO I <span class="creditos">5</span></button></li>
+      <li data-id="economia" class="generales"><button onclick="toggleCurso(this.parentElement)">ECONOMÍA Y EMPRESA <span class="creditos">3</span></button></li>
+      <li data-id="algebra" class="generales"><button onclick="toggleCurso(this.parentElement)">ÁLGEBRA LINEAL <span class="creditos">3</span></button></li>
+      <li data-id="filosofia" class="generales"><button onclick="toggleCurso(this.parentElement)">TEMAS DE FILOSOFÍA <span class="creditos">3</span></button></li>
+      <li data-id="lenguaje-2" class="generales"><button onclick="toggleCurso(this.parentElement)">LENGUAJE Y COMUNICACIÓN II <span class="creditos">3</span></button></li>
+      <li data-id="procesos-sociales" class="generales"><button onclick="toggleCurso(this.parentElement)">PROCESOS SOCIALES Y POLÍTICOS <span class="creditos">3</span></button></li>
     </ul>
     <p class="total-creditos">Créditos obligatorios: 20</p>
     </section>
@@ -44,12 +54,12 @@
     <section class="nivel">
     <h3>NIVEL 3</h3>
     <ul>
-      <li data-id="ia-aplicada" class="compartido" onclick="toggleCurso(this)">INTELIGENCIA ARTIFICIAL APLICADA <span class="creditos">3</span></li>
-      <li data-id="calculo-2" class="compartido" onclick="toggleCurso(this)">CÁLCULO II<span class="creditos">5</span></li>
-      <li data-id="orga" class="compartido" onclick="toggleCurso(this)">SISTEMAS ORGANIZACIONALES <span class="creditos">2</span></li>
-      <li data-id="fisica" onclick="toggleCurso(this)">FÍSICA PARA SISTEMAS <span class="creditos">4</span></li>
-      <li data-id="estructuras-discretas" onclick="toggleCurso(this)">ESTRUCTURAS DISCRETAS DE COMPUTACIÓN <span class="creditos">4</span></li>
-      <li data-id="intro-programacion" onclick="toggleCurso(this)">INTRODUCCIÓN A LA PROGRAMACIÓN <span class="creditos">4</span></li>
+      <li data-id="ia-aplicada" class="compartido"><button onclick="toggleCurso(this.parentElement)">INTELIGENCIA ARTIFICIAL APLICADA <span class="creditos">3</span></button></li>
+      <li data-id="calculo-2" class="compartido"><button onclick="toggleCurso(this.parentElement)">CÁLCULO II<span class="creditos">5</span></button></li>
+      <li data-id="orga" class="compartido"><button onclick="toggleCurso(this.parentElement)">SISTEMAS ORGANIZACIONALES <span class="creditos">2</span></button></li>
+      <li data-id="fisica"><button onclick="toggleCurso(this.parentElement)">FÍSICA PARA SISTEMAS <span class="creditos">4</span></button></li>
+      <li data-id="estructuras-discretas"><button onclick="toggleCurso(this.parentElement)">ESTRUCTURAS DISCRETAS DE COMPUTACIÓN <span class="creditos">4</span></button></li>
+      <li data-id="intro-programacion"><button onclick="toggleCurso(this.parentElement)">INTRODUCCIÓN A LA PROGRAMACIÓN <span class="creditos">4</span></button></li>
     </ul>
     <p class="total-creditos">Créditos obligatorios: 22</p>
     </section>
@@ -57,12 +67,12 @@
     <section class="nivel">
     <h3>NIVEL 4</h3>
     <ul>
-      <li data-id="estadistica-probabilidad" class="compartido" onclick="toggleCurso(this)">ESTADÍSTICA Y PROBABILIDAD <span class="creditos">4</span></li>
-      <li data-id="calculo-3" class="compartido" onclick="toggleCurso(this)">CÁLCULO III <span class="creditos">3</span></li>
-      <li data-id="modela-integra-sistemas" onclick="toggleCurso(this)">MODELACIÓN E INTEGRACIÓN DE SISTEMAS <span class="creditos">3</span></li>
-      <li data-id="costeo" class="compartido" onclick="toggleCurso(this)">COSTEO DE OPERACIONES <span class="creditos">3</span></li>
-      <li data-id="progra-objetos" onclick="toggleCurso(this)">PROGRAMACIÓN ORIENTADA A OBJETOS <span class="creditos">4</span></li>
-      <li data-id="arqui-computadoras" onclick="toggleCurso(this)">ARQUITECTURA DE COMPUTADORAS <span class="creditos">4</span></li>
+      <li data-id="estadistica-probabilidad" class="compartido"><button onclick="toggleCurso(this.parentElement)">ESTADÍSTICA Y PROBABILIDAD <span class="creditos">4</span></button></li>
+      <li data-id="calculo-3" class="compartido"><button onclick="toggleCurso(this.parentElement)">CÁLCULO III <span class="creditos">3</span></button></li>
+      <li data-id="modela-integra-sistemas"><button onclick="toggleCurso(this.parentElement)">MODELACIÓN E INTEGRACIÓN DE SISTEMAS <span class="creditos">3</span></button></li>
+      <li data-id="costeo" class="compartido"><button onclick="toggleCurso(this.parentElement)">COSTEO DE OPERACIONES <span class="creditos">3</span></button></li>
+      <li data-id="progra-objetos"><button onclick="toggleCurso(this.parentElement)">PROGRAMACIÓN ORIENTADA A OBJETOS <span class="creditos">4</span></button></li>
+      <li data-id="arqui-computadoras"><button onclick="toggleCurso(this.parentElement)">ARQUITECTURA DE COMPUTADORAS <span class="creditos">4</span></button></li>
     </ul>
     <p class="total-creditos">Créditos obligatorios: 21</p>
     </section>
@@ -70,12 +80,12 @@
     <section class="nivel">
     <h3>NIVEL 5</h3>
     <ul>
-      <li data-id="estadistica-aplicada" onclick="toggleCurso(this)">ESTADÍSTICA APLICADA <span class="creditos">4</span></li>
-      <li data-id="investigacion-operaciones-1" class="compartido" onclick="toggleCurso(this)">INVESTIGACIÓN DE OPERACIONES I <span class="creditos">4</span></li>
-      <li data-id="sistemas-operativos" onclick="toggleCurso(this)">SISTEMAS OPERATIVOS <span class="creditos">4</span></li>
-      <li data-id="des-compe-gerenciales" onclick="toggleCurso(this)">DESARROLLO DE COMPETENCIAS GERENCIALES <span class="creditos">3</span></li>
-      <li data-id="eda-1" onclick="toggleCurso(this)">ESTRUCTURA DE DATOS I <span class="creditos">4</span></li>
-      <li data-id="modela-base-datos" onclick="toggleCurso(this)">MODELAMIENTO DE BASE DE DATOS <span class="creditos">4</span></li>
+      <li data-id="estadistica-aplicada"><button onclick="toggleCurso(this.parentElement)">ESTADÍSTICA APLICADA <span class="creditos">4</span></button></li>
+      <li data-id="investigacion-operaciones-1" class="compartido"><button onclick="toggleCurso(this.parentElement)">INVESTIGACIÓN DE OPERACIONES I <span class="creditos">4</span></button></li>
+      <li data-id="sistemas-operativos"><button onclick="toggleCurso(this.parentElement)">SISTEMAS OPERATIVOS <span class="creditos">4</span></button></li>
+      <li data-id="des-compe-gerenciales"><button onclick="toggleCurso(this.parentElement)">DESARROLLO DE COMPETENCIAS GERENCIALES <span class="creditos">3</span></button></li>
+      <li data-id="eda-1"><button onclick="toggleCurso(this.parentElement)">ESTRUCTURA DE DATOS I <span class="creditos">4</span></button></li>
+      <li data-id="modela-base-datos"><button onclick="toggleCurso(this.parentElement)">MODELAMIENTO DE BASE DE DATOS <span class="creditos">4</span></button></li>
     </ul>
     <p class="total-creditos">Créditos obligatorios: 23</p>
     </section>
@@ -83,13 +93,13 @@
     <section class="nivel" ondragover="permitirSoltar(event)" ondrop="soltarCurso(event)">
     <h3>NIVEL 6</h3>
     <ul>
-      <li data-id="ingenieria-procesos-negocio" onclick="toggleCurso(this)">INGENIERÍA DE PROCESOS DE NEGOCIO <span class="creditos">3</span></li>
-      <li data-id="redes-computadoras" onclick="toggleCurso(this)">REDES DE COMPUTADORAS <span class="creditos">4</span></li>
-      <li data-id="simulacion" onclick="toggleCurso(this)">SIMULACIÓN <span class="creditos">3</span></li>
-      <li data-id="eda-2" onclick="toggleCurso(this)">ESTRUCTURA DE DATOS II <span class="creditos">4</span></li>
-      <li data-id="progra-web" onclick="toggleCurso(this)">PROGRAMACIÓN WEB <span class="creditos">3</span></li>
-      <li data-id="gestion-financiera" onclick="toggleCurso(this)">GESTIÓN FINANCIERA <span class="creditos">3</span></li>
-      <li data-id="electivo-1" class="electivo" onclick="toggleCurso(this)">ELECTIVO <span class="creditos">3</span></li>
+      <li data-id="ingenieria-procesos-negocio"><button onclick="toggleCurso(this.parentElement)">INGENIERÍA DE PROCESOS DE NEGOCIO <span class="creditos">3</span></button></li>
+      <li data-id="redes-computadoras"><button onclick="toggleCurso(this.parentElement)">REDES DE COMPUTADORAS <span class="creditos">4</span></button></li>
+      <li data-id="simulacion"><button onclick="toggleCurso(this.parentElement)">SIMULACIÓN <span class="creditos">3</span></button></li>
+      <li data-id="eda-2"><button onclick="toggleCurso(this.parentElement)">ESTRUCTURA DE DATOS II <span class="creditos">4</span></button></li>
+      <li data-id="progra-web"><button onclick="toggleCurso(this.parentElement)">PROGRAMACIÓN WEB <span class="creditos">3</span></button></li>
+      <li data-id="gestion-financiera"><button onclick="toggleCurso(this.parentElement)">GESTIÓN FINANCIERA <span class="creditos">3</span></button></li>
+      <li data-id="electivo-1" class="electivo"><button onclick="toggleCurso(this.parentElement)">ELECTIVO <span class="creditos">3</span></button></li>
     </ul>
     <ul class="lista-cursos"></ul>
     <p class="total-creditos">Créditos obligatorios: 20</p>
@@ -98,12 +108,12 @@
     <section class="nivel" ondragover="permitirSoltar(event)" ondrop="soltarCurso(event)">
     <h3>NIVEL 7</h3>
     <ul>
-      <li data-id="sistemas-inte-empresarial" onclick="toggleCurso(this)">SISTEMAS DE INTELIGENCIA EMPRESARIAL <span class="creditos">4</span></li>
-      <li data-id="gestion-operaciones" onclick="toggleCurso(this)">GESTIÓN DE OPERACIONES <span class="creditos">3</span></li>
-      <li data-id="ing-software-1" onclick="toggleCurso(this)">INGENIERÍA DE SOFTWARE I <span class="creditos">4</span></li>
-      <li data-id="machine-learning" onclick="toggleCurso(this)">APRENDIZAJE DE MÁQUINA / MACHINE LEARNING <span class="creditos">4</span></li>
-      <li data-id="ciberseguridad" onclick="toggleCurso(this)">CIBERSEGURIDAD / CYBERSECURITY <span class="creditos">4</span></li>
-      <li data-id="electivo-2" class="electivo" onclick="toggleCurso(this)">ELECTIVO <span class="creditos">3</span></li>
+      <li data-id="sistemas-inte-empresarial"><button onclick="toggleCurso(this.parentElement)">SISTEMAS DE INTELIGENCIA EMPRESARIAL <span class="creditos">4</span></button></li>
+      <li data-id="gestion-operaciones"><button onclick="toggleCurso(this.parentElement)">GESTIÓN DE OPERACIONES <span class="creditos">3</span></button></li>
+      <li data-id="ing-software-1"><button onclick="toggleCurso(this.parentElement)">INGENIERÍA DE SOFTWARE I <span class="creditos">4</span></button></li>
+      <li data-id="machine-learning"><button onclick="toggleCurso(this.parentElement)">APRENDIZAJE DE MÁQUINA / MACHINE LEARNING <span class="creditos">4</span></button></li>
+      <li data-id="ciberseguridad"><button onclick="toggleCurso(this.parentElement)">CIBERSEGURIDAD / CYBERSECURITY <span class="creditos">4</span></button></li>
+      <li data-id="electivo-2" class="electivo"><button onclick="toggleCurso(this.parentElement)">ELECTIVO <span class="creditos">3</span></button></li>
     </ul>
     <ul class="lista-cursos"></ul>
     <p class="total-creditos">Créditos obligatorios: 19</p>
@@ -112,12 +122,12 @@
     <section class="nivel" ondragover="permitirSoltar(event)" ondrop="soltarCurso(event)">
     <h3>NIVEL 8</h3>
     <ul>
-      <li data-id="propuesta-investigacion" onclick="toggleCurso(this)">PROPUESTA DE INVESTIGACIÓN <span class="creditos">3</span></li>
-      <li data-id="sistemas-erp" onclick="toggleCurso(this)">SISTEMAS ERP <span class="creditos">3</span></li>
-      <li data-id="auditoria-control-sistemas" onclick="toggleCurso(this)">AUDITORÍA Y CONTROL DE SISTEMAS <span class="creditos">3</span></li>
-      <li data-id="ing-software-2" onclick="toggleCurso(this)">INGENIERÍA DE SOFTWARE II <span class="creditos">4</span></li>
-      <li data-id="electivo-3" class="electivo" onclick="toggleCurso(this)">ELECTIVO <span class="creditos">3</span></li>
-      <li data-id="electivo-4" class="electivo" onclick="toggleCurso(this)">ELECTIVO <span class="creditos">3</span></li>
+      <li data-id="propuesta-investigacion"><button onclick="toggleCurso(this.parentElement)">PROPUESTA DE INVESTIGACIÓN <span class="creditos">3</span></button></li>
+      <li data-id="sistemas-erp"><button onclick="toggleCurso(this.parentElement)">SISTEMAS ERP <span class="creditos">3</span></button></li>
+      <li data-id="auditoria-control-sistemas"><button onclick="toggleCurso(this.parentElement)">AUDITORÍA Y CONTROL DE SISTEMAS <span class="creditos">3</span></button></li>
+      <li data-id="ing-software-2"><button onclick="toggleCurso(this.parentElement)">INGENIERÍA DE SOFTWARE II <span class="creditos">4</span></button></li>
+      <li data-id="electivo-3" class="electivo"><button onclick="toggleCurso(this.parentElement)">ELECTIVO <span class="creditos">3</span></button></li>
+      <li data-id="electivo-4" class="electivo"><button onclick="toggleCurso(this.parentElement)">ELECTIVO <span class="creditos">3</span></button></li>
     </ul>
     <ul class="lista-cursos"></ul>
     <p class="total-creditos">Créditos obligatorios: 13</p>
@@ -126,11 +136,11 @@
     <section class="nivel" ondragover="permitirSoltar(event)" ondrop="soltarCurso(event)">
     <h3>NIVEL 9</h3>
     <ul>
-      <li data-id="tesis-1" onclick="toggleCurso(this)">SEMINARIO DE INVESTIGACIÓN I <span class="creditos">4</span></li>
-      <li data-id="planea-estrategico" onclick="toggleCurso(this)">PLANEAMIENTO ESTRATÉGICO <span class="creditos">3</span></li>
-      <li data-id="gestion-proyectos" class="compartido" onclick="toggleCurso(this)">GESTIÓN DE PROYECTOS <span class="creditos">3</span></li>
-      <li data-id="seguridad-sistemas" onclick="toggleCurso(this)">SEGURIDAD DE SISTEMAS <span class="creditos">4</span></li>
-      <li data-id="electivo-5" class="electivo" onclick="toggleCurso(this)">ELECTIVO <span class="creditos">3</span></li>
+      <li data-id="tesis-1"><button onclick="toggleCurso(this.parentElement)">SEMINARIO DE INVESTIGACIÓN I <span class="creditos">4</span></button></li>
+      <li data-id="planea-estrategico"><button onclick="toggleCurso(this.parentElement)">PLANEAMIENTO ESTRATÉGICO <span class="creditos">3</span></button></li>
+      <li data-id="gestion-proyectos" class="compartido"><button onclick="toggleCurso(this.parentElement)">GESTIÓN DE PROYECTOS <span class="creditos">3</span></button></li>
+      <li data-id="seguridad-sistemas"><button onclick="toggleCurso(this.parentElement)">SEGURIDAD DE SISTEMAS <span class="creditos">4</span></button></li>
+      <li data-id="electivo-5" class="electivo"><button onclick="toggleCurso(this.parentElement)">ELECTIVO <span class="creditos">3</span></button></li>
     </ul>
     <ul class="lista-cursos"></ul>
     <p class="total-creditos">Créditos obligatorios: 14</p>
@@ -139,11 +149,11 @@
     <section class="nivel" ondragover="permitirSoltar(event)" ondrop="soltarCurso(event)">
     <h3>NIVEL 10</h3>
     <ul>
-      <li data-id="tesis-2" onclick="toggleCurso(this)">SEMINARIO DE INVESTIGACIÓN II <span class="creditos">4</span></li>
-      <li data-id="gestion-servicios-digitales" onclick="toggleCurso(this)">GESTIÓN DE SERVICIOS DIGITALES <span class="creditos">4</span></li>
-      <li data-id="proyecto-integrador" onclick="toggleCurso(this)">PROYECTO INTEGRADOR DE SISTEMAS <span class="creditos">4</span></li>
-      <li data-id="electivo-6" class="electivo" onclick="toggleCurso(this)">ELECTIVO <span class="creditos">3</span></li>
-      <li data-id="electivo-7" class="electivo" onclick="toggleCurso(this)">ELECTIVO <span class="creditos">3</span></li>
+      <li data-id="tesis-2"><button onclick="toggleCurso(this.parentElement)">SEMINARIO DE INVESTIGACIÓN II <span class="creditos">4</span></button></li>
+      <li data-id="gestion-servicios-digitales"><button onclick="toggleCurso(this.parentElement)">GESTIÓN DE SERVICIOS DIGITALES <span class="creditos">4</span></button></li>
+      <li data-id="proyecto-integrador"><button onclick="toggleCurso(this.parentElement)">PROYECTO INTEGRADOR DE SISTEMAS <span class="creditos">4</span></button></li>
+      <li data-id="electivo-6" class="electivo"><button onclick="toggleCurso(this.parentElement)">ELECTIVO <span class="creditos">3</span></button></li>
+      <li data-id="electivo-7" class="electivo"><button onclick="toggleCurso(this.parentElement)">ELECTIVO <span class="creditos">3</span></button></li>
     </ul>
     <ul class="lista-cursos"></ul>
     <p class="total-creditos">Créditos obligatorios: 12</p>

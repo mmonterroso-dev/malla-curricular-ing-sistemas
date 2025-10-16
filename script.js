@@ -1,29 +1,62 @@
-function toggleCurso(element) {
-  const id = element.getAttribute("data-id");
-  element.classList.toggle("completado");
+const totalCursos = document.querySelectorAll('#contenedor-malla li[data-id]').length;
+const barraProgreso = document.getElementById('barra-interna');
+const textoProgreso = document.getElementById('porcentaje-progreso');
 
-  // Guardar estado en localStorage
-  const estadoActual = localStorage.getItem("cursosCompletados");
-  const cursos = estadoActual ? JSON.parse(estadoActual) : {};
-
-  cursos[id] = element.classList.contains("completado");
-  localStorage.setItem("cursosCompletados", JSON.stringify(cursos));
+function actualizarProgreso() {
+  const cursosAprobados = document.querySelectorAll('.completado').length;
+  const porcentaje = totalCursos > 0 ? (cursosAprobados / totalCursos) * 100 : 0;
+  
+  barraProgreso.style.width = porcentaje + '%';
+  textoProgreso.textContent = Math.round(porcentaje) + '%';
 }
 
-window.onload = function () {
-  const estadoGuardado = localStorage.getItem("cursosCompletados");
-  if (!estadoGuardado) return;
+document.addEventListener('DOMContentLoaded', () => {
+    cargarEstadoCursos();
+});
 
-  const cursos = JSON.parse(estadoGuardado);
-  for (const id in cursos) {
-    if (cursos[id]) {
-      const elemento = document.querySelector(`[data-id="${id}"]`);
-      if (elemento) {
-        elemento.classList.add("completado");
-      }
+function toggleCurso(cursoElemento) {
+    cursoElemento.classList.toggle('completado');
+    guardarEstadoCursos(); // Guarda el cambio en la memoria
+    actualizarProgreso(); // Actualiza la barra visualmente
+}
+
+function guardarEstadoCursos() {
+    const cursosCompletados = document.querySelectorAll('.completado');
+    const idsDeCursosCompletados = [];
+    cursosCompletados.forEach(curso => {
+        idsDeCursosCompletados.push(curso.dataset.id);
+    });
+    // Guardamos la lista de IDs en localStorage
+    localStorage.setItem('cursosCompletadosMalla', JSON.stringify(idsDeCursosCompletados));
+}
+
+function cargarEstadoCursos() {
+    const idsGuardados = localStorage.getItem('cursosCompletadosMalla');
+    if (idsGuardados) {
+        const idsDeCursosCompletados = JSON.parse(idsGuardados);
+        idsDeCursosCompletados.forEach(id => {
+            const cursoElemento = document.querySelector(`li[data-id="${id}"]`);
+            if (cursoElemento) {
+                cursoElemento.classList.add('completado');
+            }
+        });
     }
-  }
-};
+    actualizarProgreso();
+}
+
+function actualizarProgreso() {
+    const totalCursos = document.querySelectorAll('#contenedor-malla li[data-id]').length;
+    const barraProgreso = document.getElementById('barra-interna');
+    const textoProgreso = document.getElementById('porcentaje-progreso');
+
+    const cursosCompletados = document.querySelectorAll('.completado').length;
+    const porcentaje = totalCursos > 0 ? (cursosCompletados / totalCursos) * 100 : 0;
+
+    if (barraProgreso && textoProgreso) {
+        barraProgreso.style.width = `${porcentaje}%`;
+        textoProgreso.textContent = `${Math.round(porcentaje)}%`;
+    }
+}
 
 function filtrarElectivos(tipo) {
   const electivos = document.querySelectorAll("#lista-electivos li");
@@ -35,8 +68,6 @@ function filtrarElectivos(tipo) {
     }
   });
 }
-
-
 
 function arrastrarCurso(event) {
   const nombre = event.target.getAttribute("data-nombre");
@@ -63,5 +94,4 @@ function soltarCurso(event) {
   
   nuevoCurso.appendChild(spanCreditos);
   event.currentTarget.querySelector("ul.lista-cursos").appendChild(nuevoCurso);
-
 }
