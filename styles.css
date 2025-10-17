@@ -341,6 +341,9 @@ footer {
   color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .info-progreso {
   display: flex;
@@ -385,4 +388,5 @@ footer {
 
 #menu-borrar button:hover {
   background-color: #c82333;
+
 }
