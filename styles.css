@@ -177,6 +177,44 @@ footer {
   border-top: 2px solid #ccc;
 }
 
+
+/* --- ESTILOS PARA ELECTIVOS INTERACTIVOS --- */
+
+/* Estilo para los espacios vacíos en la malla */
+.slot-electivo {
+  background-color: transparent !important;
+  border: 2px dashed #ccc; /* Borde punteado para indicar que es una zona para soltar */
+  height: 45px;
+  align-items: center;
+  justify-content: center;
+}
+
+.slot-electivo span:first-child {
+  color: #888;
+  font-style: italic;
+  width: 100%;
+  text-align: center;
+}
+
+/* Estilo para el slot cuando un curso ha sido soltado en él */
+.slot-electivo.lleno {
+  background-color: #ffc164 !important; /* Color de fondo de los electivos */
+  border: none; /* Quitamos el borde punteado */
+  cursor: grab; /* Indica que se puede volver a arrastrar */
+  justify-content: space-between; /* Alinea el texto a la izquierda y los créditos a la derecha */
+}
+
+.slot-electivo.lleno span:first-child {
+  color: #000;
+  font-style: normal;
+  text-align: left;
+}
+
+/* Clase para ocultar un electivo de la lista de abajo cuando se usa */
+.bloque-electivo.escondido {
+  display: none;
+}
+
 .electivos-grid {
   max-width: none;
   margin: 0;
@@ -233,13 +271,7 @@ footer {
   transition: border 0.3s ease;
 }
 
-.nivel.drag-over {
-  border-color: #007acc;
-  background-color: #f0f8ff;
-}
-
 /*  SOLUCIÓN PARA DISEÑO RESPONSIVO  */
-
 @media (max-width: 992px) {
   
   /* Hacemos los títulos un poco más pequeños para que quepan mejor */
@@ -288,16 +320,16 @@ footer {
   border: none;
   padding: 0;
   margin: 0;
-  font: inherit; /* Usa la misma fuente que el resto del li */
-  color: inherit; /* Usa el mismo color */
+  font: inherit;
+  color: inherit;
   cursor: pointer;
   width: 100%;
   height: 100%;
-  text-align: left; /* Alinea el texto a la izquierda */
-  display: flex; /* Para alinear el span de créditos */
+  text-align: left;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px; /* Restablece el padding que estaba en el li */
+  padding: 10px;
 }
 
 /* barra progreso -----------------------------------------------------------------
@@ -325,9 +357,32 @@ footer {
   overflow: hidden;
 }
 .barra-interna {
-  width: 0%; /* Inicia en 0 */
+  width: 0%;
   height: 100%;
   background-color: #ff7300;
   border-radius: 10px;
-  transition: width 0.5s ease-out; /* Animación suave */
+  transition: width 0.5s ease-out;
+}
+
+/* --- ESTILOS PARA EL MENÚ CONTEXTUAL DE BORRADO --- */
+#menu-borrar {
+  position: absolute; /* Permite posicionarlo en cualquier lugar de la página */
+  display: none;      /* Oculto por defecto */
+  z-index: 1000;      /* Se asegura de que esté por encima de otros elementos */
+}
+
+#menu-borrar button {
+  background-color: #dc3545; /* Un color rojo para indicar "borrar" */
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Oswald', sans-serif;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.2s;
+}
+
+#menu-borrar button:hover {
+  background-color: #c82333;
 }
