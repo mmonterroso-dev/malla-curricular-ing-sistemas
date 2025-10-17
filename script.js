@@ -6,11 +6,28 @@ menuBorrar.id = 'menu-borrar';
 menuBorrar.innerHTML = `<button>Borrar</button>`;
 document.body.appendChild(menuBorrar);
 let pressTimer;
+let dataMallaCompleta = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
     await generarMallaDesdeJSON();
     cargarEstadoCursos();
     cargarEstadoElectivos();
+    
+    // --- LÓGICA PARA CERRAR EL MODAL ---
+    const modal = document.getElementById('modal-info');
+    const btnCerrar = document.querySelector('.cerrar-modal');
+
+    if (btnCerrar) {
+        btnCerrar.onclick = () => {
+            modal.style.display = 'none';
+        }
+    }
+    // Cierra el modal si se hace clic fuera del contenido
+    window.onclick = (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
 
     const todosLosCursos = document.querySelectorAll('#contenedor-malla li[data-id]:not(.slot-electivo) button');
     todosLosCursos.forEach(curso => {
@@ -46,9 +63,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const todosLosCursosLi = document.querySelectorAll('#contenedor-malla li[data-id]');
+    todosLosCursosLi.forEach(curso => {
+        curso.addEventListener('contextmenu', handleContextMenu);
+    });
+
     todosLosCursosLi.forEach(cursoLi => {
         cursoLi.addEventListener('mouseover', handleMouseOver);
         cursoLi.addEventListener('mouseout', handleMouseOut);
+    });
+
+    const cursosFijosLi = document.querySelectorAll('#contenedor-malla li[data-id]:not(.slot-electivo)');
+    cursosFijosLi.forEach(curso => {
+        curso.addEventListener('touchstart', handleTouchStart);
+        curso.addEventListener('touchend', handleTouchEnd);
+        curso.addEventListener('touchmove', handleTouchEnd); // Cancela si el dedo se mueve
     });
 });
 
@@ -89,17 +117,6 @@ function actualizarProgreso() {
         barraProgreso.style.width = `${porcentaje}%`;
         textoProgreso.textContent = `${Math.round(porcentaje)}%`;
     }
-}
-
-function filtrarElectivos(tipo) {
-  const electivos = document.querySelectorAll("#lista-electivos li");
-  electivos.forEach((el) => {
-    if (tipo === "todos") {
-      el.style.display = "list-item";
-    } else {
-      el.style.display = el.getAttribute("data-tipo") === tipo ? "list-item" : "none";
-    }
-  });
 }
 
 function arrastrarCurso(event) {
@@ -155,7 +172,7 @@ function llenarSlot(slot, data) {
     slot.dataset.cursoId = data.cursoId;
     slot.addEventListener('dragstart', arrastrarCurso);
     slot.addEventListener('click', () => toggleCurso(slot));
-    slot.addEventListener('contextmenu', mostrarMenuBorrar);
+    slot.addEventListener('contextmenu', handleContextMenu);
     slot.addEventListener('touchstart', handleTouchStart);
     slot.addEventListener('touchend', handleTouchEnd);
     slot.addEventListener('touchmove', handleTouchEnd);
@@ -165,12 +182,14 @@ function llenarSlot(slot, data) {
 
 function limpiarSlot(slot) {
     slot.querySelector('span:first-child').textContent = 'ELECTIVO';
-    slot.classList.remove('lleno');
+    slot.classList.remove('lleno', 'completado');
     slot.removeAttribute('draggable');
     delete slot.dataset.cursoId;
-    slot.removeEventListener('dragstart', arrastrarCurso);
-    slot.removeEventListener('mouseover', handleMouseOver);
-    slot.removeEventListener('mouseout', handleMouseOut);
+    const nuevoSlot = slot.cloneNode(true);
+    slot.parentNode.replaceChild(nuevoSlot, slot);
+    nuevoSlot.addEventListener('dragover', permitirSoltar);
+    nuevoSlot.addEventListener('dragleave', () => nuevoSlot.classList.remove('drag-over'));
+    nuevoSlot.addEventListener('drop', soltarCurso);
 }
 
 function guardarEstadoElectivos() {
@@ -201,36 +220,6 @@ function cargarEstadoElectivos() {
     }
 }
 
-function mostrarMenuBorrar(event) {
-    // 1. Previene que aparezca el menú normal del navegador
-    event.preventDefault();
-
-    const slotClickeado = event.currentTarget; // El <li> que recibió el clic derecho
-
-    // 2. Posiciona nuestro menú personalizado donde se hizo clic
-    menuBorrar.style.display = 'block';
-    menuBorrar.style.left = `${event.pageX}px`;
-    menuBorrar.style.top = `${event.pageY}px`;
-
-    // 3. Le decimos al botón "Borrar" qué hacer cuando se le haga clic
-    menuBorrar.querySelector('button').onclick = () => {
-        // Encuentra el curso original en el footer
-        const cursoOriginal = document.querySelector(`.bloque-electivo[data-id="${slotClickeado.dataset.cursoId}"]`);
-        if (cursoOriginal) {
-            cursoOriginal.classList.remove('escondido'); // Lo vuelve a mostrar
-        }
-
-        // Limpia el slot para que vuelva a su estado original
-        limpiarSlot(slotClickeado);
-
-        // Guarda el nuevo estado (sin el curso borrado)
-        guardarEstadoElectivos();
-
-        // Oculta el menú de borrado
-        menuBorrar.style.display = 'none';
-    };
-}
-
 // Oculta el menú si el usuario hace clic en cualquier otro lugar de la página
 window.addEventListener('click', () => {
     menuBorrar.style.display = 'none';
@@ -238,19 +227,16 @@ window.addEventListener('click', () => {
 
 //Mantener pulsado con el dedo, en celular
 function handleTouchStart(event) {
-    const slot = event.currentTarget;
-
-    // Inicia un temporizador. Si no se cancela en 500ms, es una pulsación larga.
+    const elementoTocado = event.currentTarget;
     pressTimer = setTimeout(() => {
-        // Creamos un "evento falso" para pasarle las coordenadas del toque
         const mockEvent = {
-            preventDefault: () => event.preventDefault(), // Evita acciones raras del navegador
-            pageX: event.touches[0].pageX, // Coordenada X del dedo
-            pageY: event.touches[0].pageY, // Coordenada Y del dedo
-            currentTarget: slot
+            preventDefault: () => event.preventDefault(),
+            pageX: event.touches[0].pageX,
+            pageY: event.touches[0].pageY,
+            currentTarget: elementoTocado
         };
-        mostrarMenuBorrar(mockEvent);
-    }, 500); // 500 milisegundos = medio segundo
+        handleContextMenu(mockEvent);
+    }, 500);
 }
 
 // Se activa cuando el usuario QUITA el dedo del curso
@@ -307,61 +293,65 @@ function validarPrerequisitos(prereqs) {
 // Malla desde JSON
 async function generarMallaDesdeJSON() {
     const contenedorMalla = document.getElementById('contenedor-malla');
-    if (!contenedorMalla) return;
+    const indicadorCarga = document.getElementById('indicador-carga');
+    const mensajeError = document.getElementById('mensaje-error');
 
-    // 1. Lee el archivo JSON usando fetch
-    const response = await fetch('malla.json');
-    const dataNiveles = await response.json();
+    try {
+        const response = await fetch('malla.json');
+        if (!response.ok) {
+            throw new Error(`Error al cargar el archivo: ${response.statusText}`);
+        }
+        const dataNiveles = await response.json();
+        
+        dataMallaCompleta = dataNiveles;
+        contenedorMalla.innerHTML = '';
 
-    // 2. Recorre cada nivel en los datos
-    dataNiveles.forEach(nivelInfo => {
-        // Crea el <section> para el nivel
-        const seccionNivel = document.createElement('section');
-        seccionNivel.className = 'nivel';
+        dataNiveles.forEach(nivelInfo => {
+            const seccionNivel = document.createElement('section');
+            seccionNivel.className = 'nivel';
 
-        // Crea el <h3> para el título del nivel
-        const tituloNivel = document.createElement('h3');
-        tituloNivel.textContent = `NIVEL ${nivelInfo.nivel}`;
-        seccionNivel.appendChild(tituloNivel);
+            const tituloNivel = document.createElement('h3');
+            tituloNivel.textContent = `NIVEL ${nivelInfo.nivel}`;
+            seccionNivel.appendChild(tituloNivel);
 
-        // Crea el <ul> para la lista de cursos
-        const listaCursos = document.createElement('ul');
+            const listaCursos = document.createElement('ul');
 
-        // 3. Recorre cada curso dentro del nivel
-        nivelInfo.cursos.forEach(cursoInfo => {
-            const esElectivo = cursoInfo.tipo === 'electivo';
+            nivelInfo.cursos.forEach(cursoInfo => {
+                const esElectivo = cursoInfo.tipo === 'electivo';
+                const itemCurso = document.createElement('li');
+                itemCurso.dataset.id = cursoInfo.id;
+                if (cursoInfo.creditos) itemCurso.dataset.creditos = cursoInfo.creditos;
+                if (cursoInfo.prerequisitos) itemCurso.dataset.prerequisitos = cursoInfo.prerequisitos;
+                
+                itemCurso.classList.add(cursoInfo.tipo);
+                if (esElectivo) itemCurso.classList.add('slot-electivo');
+                
+                if (esElectivo) {
+                    itemCurso.innerHTML = `<span>ELECTIVO</span><span class="creditos">${cursoInfo.creditos}</span>`;
+                } else {
+                    itemCurso.innerHTML = `<button>${cursoInfo.nombre} <span class="creditos">${cursoInfo.creditos}</span></button>`;
+                }
 
-            // Crea el <li> para el curso
-            const itemCurso = document.createElement('li');
-            itemCurso.dataset.id = cursoInfo.id;
-            if (cursoInfo.creditos) itemCurso.dataset.creditos = cursoInfo.creditos;
-            if (cursoInfo.prerequisitos) itemCurso.dataset.prerequisitos = cursoInfo.prerequisitos;
-            
-            // Añade las clases correspondientes
-            itemCurso.classList.add(cursoInfo.tipo);
-            if(esElectivo) itemCurso.classList.add('slot-electivo');
-            
-            // Crea el contenido interno del <li>
-            if(esElectivo) {
-                itemCurso.innerHTML = `<span>Arrastra un electivo aquí</span><span class="creditos">${cursoInfo.creditos}</span>`;
-            } else {
-                itemCurso.innerHTML = `<button>${cursoInfo.nombre} <span class="creditos">${cursoInfo.creditos}</span></button>`;
-            }
+                listaCursos.appendChild(itemCurso);
+            });
 
-            listaCursos.appendChild(itemCurso);
+            seccionNivel.appendChild(listaCursos);
+
+            const totalCreditos = document.createElement('p');
+            totalCreditos.className = 'total-creditos';
+            totalCreditos.textContent = `Créditos obligatorios: ${nivelInfo.creditos_obligatorios}`;
+            seccionNivel.appendChild(totalCreditos);
+
+            contenedorMalla.appendChild(seccionNivel);
         });
 
-        seccionNivel.appendChild(listaCursos);
-
-        // Crea el <p> para los créditos totales
-        const totalCreditos = document.createElement('p');
-        totalCreditos.className = 'total-creditos';
-        totalCreditos.textContent = `Créditos obligatorios: ${nivelInfo.creditos_obligatorios}`;
-        seccionNivel.appendChild(totalCreditos);
-
-        // 4. Añade la sección del nivel completa al contenedor principal
-        contenedorMalla.appendChild(seccionNivel);
-    });
+    } catch (error) {
+        console.error('Falló la carga de la malla:', error);
+        if (indicadorCarga) indicadorCarga.style.display = 'none';
+        if (mensajeError) mensajeError.style.display = 'block';
+    } finally {
+        if (indicadorCarga) indicadorCarga.style.display = 'none';
+    }
 }
 
 // Para prerequisitos al pasar el mouse por encima de un curso
@@ -394,4 +384,74 @@ function handleMouseOut() {
     cursosResaltados.forEach(curso => {
         curso.classList.remove('prerrequisito-highlight', 'habilita-highlight');
     });
+}
+
+function abrirModalInfo(cursoElemento) {
+    const cursoId = cursoElemento.dataset.id;
+    const nombreCurso = cursoElemento.querySelector('button').textContent.replace(cursoElemento.querySelector('.creditos').textContent, '').trim();
+
+    // 1. Encuentra los prerrequisitos
+    const prereqs = (cursoElemento.dataset.prerequisitos || "").split(/[,|]/).filter(Boolean);
+
+    // 2. Encuentra los cursos que habilita (POST-requisitos)
+    const habilita = [];
+    dataMallaCompleta.forEach(nivel => {
+        nivel.cursos.forEach(curso => {
+            if ((curso.prerequisitos || "").split(/[,|]/).includes(cursoId)) {
+                habilita.push(curso.nombre);
+            }
+        });
+    });
+
+    // 3. Rellena el modal
+    document.getElementById('modal-titulo').textContent = nombreCurso;
+
+    const listaPrereqs = document.getElementById('modal-prerequisitos-lista');
+    listaPrereqs.innerHTML = prereqs.length ? prereqs.map(id => `<li>${document.querySelector(`li[data-id="${id}"] button`).textContent.replace(document.querySelector(`li[data-id="${id}"] .creditos`).textContent, '').trim()}</li>`).join('') : '<li>Ninguno</li>';
+
+    const listaHabilita = document.getElementById('modal-habilita-lista');
+    listaHabilita.innerHTML = habilita.length ? habilita.map(nombre => `<li>${nombre}</li>`).join('') : '<li>Ninguno</li>';
+
+    // 4. Muestra el modal
+    document.getElementById('modal-info').style.display = 'block';
+}
+
+// --- NUEVA FUNCIÓN INTELIGENTE PARA EL MENÚ CONTEXTUAL ---
+function handleContextMenu(event) {
+    event.preventDefault(); // Siempre previene el menú por defecto
+    const cursoElemento = event.currentTarget;
+    const botonMenu = menuBorrar.querySelector('button');
+
+    // DECISIÓN: ¿Qué tipo de curso es?
+    if (cursoElemento.classList.contains('slot-electivo') && cursoElemento.classList.contains('lleno')) {
+        // --- LÓGICA PARA ELECTIVOS: Mostrar "Borrar" ---
+        botonMenu.textContent = 'Borrar';
+        botonMenu.style.backgroundColor = 'var(--color-rojo-borrar)';
+
+        botonMenu.onclick = () => {
+            const cursoOriginal = document.querySelector(`.bloque-electivo[data-id="${cursoElemento.dataset.cursoId}"]`);
+            if (cursoOriginal) {
+                cursoOriginal.classList.remove('escondido');
+            }
+            limpiarSlot(cursoElemento);
+            guardarEstadoElectivos();
+            menuBorrar.style.display = 'none';
+        };
+
+    } else if (!cursoElemento.classList.contains('slot-electivo')) {
+        botonMenu.textContent = 'Más Info';
+        botonMenu.style.backgroundColor = 'var(--color-primario)';
+
+        botonMenu.onclick = () => {
+            abrirModalInfo(cursoElemento);
+            menuBorrar.style.display = 'none';
+        };
+
+    } else {
+        return;
+    }
+
+    menuBorrar.style.display = 'block';
+    menuBorrar.style.left = `${event.pageX}px`;
+    menuBorrar.style.top = `${event.pageY}px`;
 }

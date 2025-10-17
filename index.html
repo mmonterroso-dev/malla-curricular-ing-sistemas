@@ -25,37 +25,65 @@
     </section>
   
 <main id="contenedor-malla">
+  <div id="indicador-carga">
+    <div class="spinner"></div>
+    <p>Cargando malla curricular...</p>
+  </div>
+
+  <div id="mensaje-error">
+    <h3>¡Ups! Algo salió mal.</h3>
+    <p>No pudimos cargar los datos de la malla curricular. Por favor, intenta recargar la página.</p>
+  </div>
 </main>
 
 <footer>
   <section class="electivos-grid">
     <h3>Asignaturas electivas:</h3>
     <div class="grid-electivos">
-      <div data-id="paradigmas-progra" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">PARADIGMAS DE PROGRAMACIÓN <span>3</span></div>
-      <div data-id="internet" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">INTERNET DE LAS COSAS / INTERNET OF THINGS <span>3</span></div>
-      <div data-id="gestion-base-datos" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">GESTIÓN DE BASE DE DATOS <span>3</span></div>
-      <div data-id="algoritmos" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">ANÁLISIS Y DISEÑO DE ALGORITMOS <span>3</span></div>
-      <div data-id="redes-avanzadas" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">REDES AVANZADAS <span>3</span></div>
-      <div data-id="ing-conocimiento" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">INGENIERÍA DEL CONOCIMIENTO <span>3</span></div>
-      <div data-id="deep-learning" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">DEEP LEARNING <span>3</span></div>
-      <div data-id="progra-movil" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">PROGRAMACIÓN MÓVIL <span>3</span></div>
-      <div data-id="topicos-ciberseguridad" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">TÓPICOS AVANZADOS EN CIBERSEGURIDAD <span>3</span></div>
-      <div data-id="sistemas-distribuidos" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">SISTEMAS DISTRIBUIDOS <span>3</span></div>
-      <div data-id="analitica-big-data" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">ANALÍTICA CON BIG DATA <span>3</span></div>
-      <div data-id="analitica-negocios" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">ANALÍTICA DE NEGOCIOS <span>3</span></div>
-      <div data-id="proyecto-software" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">PROYECTO DE DESARROLLO DE SOFTWARE <span>3</span></div>
-      <div data-id="computacion-nube" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">COMPUTACIÓN EN LA NUBE <span>3</span></div>
-      <div data-id="innovacion-digital" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">INNOVACIÓN DIGITAL <span>3</span></div>
-      <div data-id="proyecto-videojuegos" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">PROYECTO DE VIDEOJUEGOS <span>3</span></div>
-      <div data-id="arqui-empresarial" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">ARQUITECTURA EMPRESARIAL <span>3</span></div>
-      <div data-id="human-computer" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">INTERACCIÓN HUMANO COMPUTADORA <span>3</span></div>
-      <div data-id="arqui-tecno-info" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">ARQUITECTURA DE TECNOLOGÍAS DE LA INFORMACIÓN <span>3</span></div>
-      <div data-id="devops" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">DEVOPS <span>3</span></div>
-      <div data-id="arqui-software" class="bloque-electivo" draggable="true" ondragstart="arrastrarCurso(event)">ARQUITECTURA DE SOFTWARE <span>3</span></div>
+      <div data-id="paradigmas-progra" class="bloque-electivo" draggable="true">PARADIGMAS DE PROGRAMACIÓN <span>3</span></div>
+      <div data-id="internet" class="bloque-electivo" draggable="true">INTERNET DE LAS COSAS / INTERNET OF THINGS <span>3</span></div>
+      <div data-id="gestion-base-datos" class="bloque-electivo" draggable="true">GESTIÓN DE BASE DE DATOS <span>3</span></div>
+      <div data-id="algoritmos" class="bloque-electivo" draggable="true">ANÁLISIS Y DISEÑO DE ALGORITMOS <span>3</span></div>
+      <div data-id="redes-avanzadas" class="bloque-electivo" draggable="true">REDES AVANZADAS <span>3</span></div>
+      <div data-id="ing-conocimiento" class="bloque-electivo" draggable="true">INGENIERÍA DEL CONOCIMIENTO <span>3</span></div>
+      <div data-id="deep-learning" class="bloque-electivo" draggable="true">DEEP LEARNING <span>3</span></div>
+      <div data-id="progra-movil" class="bloque-electivo" draggable="true">PROGRAMACIÓN MÓVIL <span>3</span></div>
+      <div data-id="topicos-ciberseguridad" class="bloque-electivo" draggable="true">TÓPICOS AVANZADOS EN CIBERSEGURIDAD <span>3</span></div>
+      <div data-id="sistemas-distribuidos" class="bloque-electivo" draggable="true">SISTEMAS DISTRIBUIDOS <span>3</span></div>
+      <div data-id="analitica-big-data" class="bloque-electivo" draggable="true">ANALÍTICA CON BIG DATA <span>3</span></div>
+      <div data-id="analitica-negocios" class="bloque-electivo" draggable="true">ANALÍTICA DE NEGOCIOS <span>3</span></div>
+      <div data-id="proyecto-software" class="bloque-electivo" draggable="true">PROYECTO DE DESARROLLO DE SOFTWARE <span>3</span></div>
+      <div data-id="computacion-nube" class="bloque-electivo" draggable="true">COMPUTACIÓN EN LA NUBE <span>3</span></div>
+      <div data-id="innovacion-digital" class="bloque-electivo" draggable="true">INNOVACIÓN DIGITAL <span>3</span></div>
+      <div data-id="proyecto-videojuegos" class="bloque-electivo" draggable="true">PROYECTO DE VIDEOJUEGOS <span>3</span></div>
+      <div data-id="arqui-empresarial" class="bloque-electivo" draggable="true">ARQUITECTURA EMPRESARIAL <span>3</span></div>
+      <div data-id="human-computer" class="bloque-electivo" draggable="true">INTERACCIÓN HUMANO COMPUTADORA <span>3</span></div>
+      <div data-id="arqui-tecno-info" class="bloque-electivo" draggable="true">ARQUITECTURA DE TECNOLOGÍAS DE LA INFORMACIÓN <span>3</span></div>
+      <div data-id="devops" class="bloque-electivo" draggable="true">DEVOPS <span>3</span></div>
+      <div data-id="arqui-software" class="bloque-electivo" draggable="true">ARQUITECTURA DE SOFTWARE <span>3</span></div>
     </div>
   </section>
 </footer>
 
 <script src="script.js"></script>
+
+<div id="modal-info" class="modal-oculto">
+  <div class="modal-contenido">
+    <span class="cerrar-modal">&times;</span>
+    <h3 id="modal-titulo">Nombre del Curso</h3>
+    <div class="modal-cuerpo">
+      <div class="columna-info">
+        <h4>Requiere (Prerrequisitos):</h4>
+        <ul id="modal-prerequisitos-lista">
+          </ul>
+      </div>
+      <div class="columna-info">
+        <h4>Habilita para:</h4>
+        <ul id="modal-habilita-lista">
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

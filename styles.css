@@ -81,10 +81,6 @@ body {
   margin-top: 0;
 }
 
-#btn-reiniciar:hover {
-  background-color: #51585e;
-}
-
 /* Contenedor vertical de niveles */
 #contenedor-malla {
   display: flex;
@@ -102,12 +98,6 @@ li.bloqueado button {
   background-color: #555 !important; /* Un fondo oscuro para que resalte menos */
   color: #aaa !important; /* Un color de texto apagado */
   text-decoration: none; /* Quita el tachado si es que estaba completado */
-}
-
-/* Evita que el curso "salte" al pasar el ratón si está bloqueado */
-li.bloqueado:hover {
-  transform: none;
-  box-shadow: none;
 }
 
 /* Estilo de cada nivel */
@@ -160,22 +150,6 @@ li {
   max-width: 220px;
   transition: all 0.3s ease;
 }
-
-li:hover {
-  background-color: var(--color-completado);
-  transform: translateY(-3px); /* se eleva ligeramente */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-li.compartido:hover {
-  background-color: #81d4fa;
-}
-
-li.electivo:hover {
-  background-color: #ffe082;
-}
-
-
 
 li.compartido {
   background-color: var(--color-acento-azul);
@@ -301,11 +275,6 @@ footer {
   min-height: 50px;
 }
 
-.bloque-electivo:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-}
-
 .bloque-electivo span {
   margin-left: auto;
   font-size: 1.2em;
@@ -334,29 +303,74 @@ footer {
   }
 }
 
+@media (hover: hover){
+
+  #menu-borrar button:hover{
+    background-color: var(--color-rojo-borrar);
+  }
+
+  #btn-reiniciar:hover{
+    background-color: #51585e;
+  }
+
+  li.bloqueado:hover{
+    transform: none;
+    box-shadow: none;
+  }
+
+  li:hover{
+    background-color: var(--color-completado);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  li.compartido:hover{
+    background-color: #81d4fa;
+  }
+
+  li.electivo:hover{
+    background-color: #ffe082;
+  }
+
+  .bloque-electivo:hover{
+    transform: scale(1.03);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  }
+}
 
 /* Estos estilos se aplicarán solo en pantallas de 768px de ancho o menos (celulares) */
 @media (max-width: 768px) {
 
-  /* Apilamos los niveles uno encima del otro */
   #contenedor-malla {
-    flex-direction: column; /* Cambiamos la dirección a vertical */
-    align-items: center;    /* Centramos los niveles */
-    overflow-x: hidden;     /* Quitamos el scroll horizontal que ya no es necesario */
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
   }
 
   .nivel {
-    width: 90%; /* Hacemos que cada nivel ocupe el 90% del ancho del celular */
-    min-width: unset; /* Quitamos el ancho mínimo que ya no aplica */
+    width: 90%;
+    min-width: unset;
   }
 
-  /* Hacemos los títulos aún más pequeños en celulares */
   .titulo-principal {
     font-size: 2.5em;
   }
+
   .subtitulo {
     font-size: 1.5em;
   }
+
+  #btn-reiniciar {
+        position: relative;
+        transform: none;
+        top: auto;
+        right: auto;
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: 20px;
+        margin-top: 20px;
+    }
 }
 
 /* --- Mejora de Accesibilidad --- */
@@ -430,10 +444,9 @@ footer {
   font-family: 'Oswald', sans-serif;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   transition: background-color 0.2s;
-}
-
-#menu-borrar button:hover {
-  background-color: var(--color-rojo-borrar);
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* Internet Explorer/Edge */
+  user-select: none;         /* Sintaxis estándar */
 }
 
 li.prerrequisito-highlight button {
@@ -449,4 +462,112 @@ li.habilita-highlight button {
   color: var(--color-texto-oscuro) !important;
   transform: scale(1.025);
   box-shadow: 0 0 10px #26b447b0;
+}
+
+/* --- ESTILOS PARA INDICADOR DE CARGA Y MANEJO DE ERRORES --- */
+#indicador-carga, #mensaje-error {
+  color: var(--color-texto-suave);
+  text-align: center;
+  padding: 50px 20px;
+  width: 100%;
+}
+
+#mensaje-error {
+  display: none;
+}
+
+#mensaje-error h3 {
+  color: var(--color-rojo-borrar);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--color-primario);
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- ESTILOS PARA EL MODAL DE MÁS INFORMACIÓN --- */
+.modal-oculto {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1001; /* Por encima de todo, incluso de la barra de progreso */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-contenido {
+  background-color: var(--color-superficie);
+  color: var(--color-texto-suave);
+  margin: 15% auto;
+  padding: 20px 30px;
+  border-top: 5px solid var(--color-primario);
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+}
+
+.cerrar-modal {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cerrar-modal:hover {
+  color: var(--color-texto-claro);
+}
+
+#modal-titulo {
+  color: var(--color-primario);
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 25px;
+}
+
+.modal-cuerpo {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.columna-info h4 {
+  border-bottom: 2px solid var(--color-primario);
+  padding-bottom: 5px;
+}
+
+.columna-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.columna-info li {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 5px;
+  font-size: 0.9em;
 }
