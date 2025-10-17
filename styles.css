@@ -305,6 +305,20 @@ footer {
 
 @media (hover: hover){
 
+  li.prerrequisito-highlight button {
+    background-color: #eeff009f !important;
+    color: var(--color-texto-oscuro) !important;
+    transform: scale(1.025);
+    box-shadow: 0 0 5px #ffee009d;
+  }
+
+  li.habilita-highlight button {
+    background-color: #21cf4abb !important;
+    color: var(--color-texto-oscuro) !important;
+    transform: scale(1.025);
+    box-shadow: 0 0 10px #26b447b0;
+  }
+
   #menu-borrar button:hover{
     background-color: var(--color-rojo-borrar);
   }
@@ -447,21 +461,6 @@ footer {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none;     /* Internet Explorer/Edge */
   user-select: none;         /* Sintaxis estándar */
-}
-
-li.prerrequisito-highlight button {
-  background-color: #eeff009f !important; /* Azul para "necesitas esto" */
-  color: var(--color-texto-oscuro) !important;
-  transform: scale(1.025);
-  box-shadow: 0 0 5px #ffee009d;
-}
-
-/* Estilo para los cursos que DESBLOQUEA el curso seleccionado */
-li.habilita-highlight button {
-  background-color: #21cf4abb !important; /* Verde para "esto se desbloquea" */
-  color: var(--color-texto-oscuro) !important;
-  transform: scale(1.025);
-  box-shadow: 0 0 10px #26b447b0;
 }
 
 /* --- ESTILOS PARA INDICADOR DE CARGA Y MANEJO DE ERRORES --- */
