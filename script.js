@@ -7,7 +7,8 @@ menuBorrar.innerHTML = `<button>Borrar</button>`;
 document.body.appendChild(menuBorrar);
 let pressTimer;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await generarMallaDesdeJSON();
     cargarEstadoCursos();
     cargarEstadoElectivos();
 
@@ -29,12 +30,36 @@ document.addEventListener('DOMContentLoaded', () => {
         zona.addEventListener('dragleave', () => zona.classList.remove('drag-over'));
         zona.addEventListener('drop', soltarCurso);
     });
+
+    const btnReiniciar = document.getElementById('btn-reiniciar');
+    if (btnReiniciar) {
+        btnReiniciar.addEventListener('click', () => {
+            
+            const confirmacion = confirm('¿Estás seguro de que quieres borrar todo tu progreso y los electivos seleccionados? Esta acción no se puede deshacer.');
+
+            if (confirmacion) {
+                localStorage.removeItem('cursosCompletadosMalla');
+                localStorage.removeItem('electivosColocados');
+                location.reload();
+            }
+        });
+    }
+
+    const todosLosCursosLi = document.querySelectorAll('#contenedor-malla li[data-id]');
+    todosLosCursosLi.forEach(cursoLi => {
+        cursoLi.addEventListener('mouseover', handleMouseOver);
+        cursoLi.addEventListener('mouseout', handleMouseOut);
+    });
 });
 
 function toggleCurso(cursoElemento) {
+    if (cursoElemento.classList.contains('bloqueado')) {
+        return; 
+    }
     cursoElemento.classList.toggle('completado');
     guardarEstadoCursos();
     actualizarProgreso();
+    actualizarEstadoDeBloqueo(); 
 }
 
 function guardarEstadoCursos() {
@@ -50,6 +75,7 @@ function cargarEstadoCursos() {
         if (curso) curso.classList.add('completado');
     });
     actualizarProgreso();
+    actualizarEstadoDeBloqueo();
 }
 
 function actualizarProgreso() {
@@ -133,6 +159,8 @@ function llenarSlot(slot, data) {
     slot.addEventListener('touchstart', handleTouchStart);
     slot.addEventListener('touchend', handleTouchEnd);
     slot.addEventListener('touchmove', handleTouchEnd);
+    slot.addEventListener('mouseover', handleMouseOver);
+    slot.addEventListener('mouseout', handleMouseOut);
 }
 
 function limpiarSlot(slot) {
@@ -141,6 +169,8 @@ function limpiarSlot(slot) {
     slot.removeAttribute('draggable');
     delete slot.dataset.cursoId;
     slot.removeEventListener('dragstart', arrastrarCurso);
+    slot.removeEventListener('mouseover', handleMouseOver);
+    slot.removeEventListener('mouseout', handleMouseOut);
 }
 
 function guardarEstadoElectivos() {
@@ -227,4 +257,141 @@ function handleTouchStart(event) {
 function handleTouchEnd() {
     // Si el dedo se levanta antes de los 500ms, cancelamos el temporizador
     clearTimeout(pressTimer);
+}
+
+// PREREQUISITOS
+function actualizarEstadoDeBloqueo() {
+    const todosLosCursos = document.querySelectorAll('#contenedor-malla li[data-id]');
+    
+    todosLosCursos.forEach(curso => {
+        const prerequisitosString = curso.dataset.prerequisitos;
+        
+        // Si el curso no tiene prerrequisitos, nos aseguramos de que no esté bloqueado y terminamos.
+        if (!prerequisitosString) {
+            curso.classList.remove('bloqueado');
+            return;
+        }
+
+        // Le preguntamos a nuestra función "cerebro" si los prerrequisitos se cumplen.
+        const estanCumplidos = validarPrerequisitos(prerequisitosString);
+
+        // Actuamos según la respuesta.
+        if (estanCumplidos) {
+            curso.classList.remove('bloqueado'); // Se cumplen, quitamos el bloqueo.
+        } else {
+            curso.classList.add('bloqueado'); // No se cumplen, añadimos el bloqueo.
+        }
+    });
+}
+
+function validarPrerequisitos(prereqs) {
+    // Primero, creamos una lista de los IDs de todos los cursos que ya están completados.
+    const cursosCompletados = new Set(
+        Array.from(document.querySelectorAll('.completado')).map(c => c.dataset.id)
+    );
+
+    // Lógica "O" (OR): si la cadena contiene "|", necesitamos que AL MENOS UNO se cumpla.
+    if (prereqs.includes('|')) {
+        const listaOr = prereqs.split('|');
+        // El método .some() devuelve true si al menos un curso de la lista está en nuestros cursosCompletados.
+        return listaOr.some(id => cursosCompletados.has(id.trim()));
+    } 
+    // Lógica "Y" (AND): si no, asumimos que TODOS se deben cumplir (separados por coma).
+    else {
+        const listaAnd = prereqs.split(',');
+        // El método .every() devuelve true solo si TODOS los cursos de la lista están en nuestros cursosCompletados.
+        return listaAnd.every(id => cursosCompletados.has(id.trim()));
+    }
+}
+
+// Malla desde JSON
+async function generarMallaDesdeJSON() {
+    const contenedorMalla = document.getElementById('contenedor-malla');
+    if (!contenedorMalla) return;
+
+    // 1. Lee el archivo JSON usando fetch
+    const response = await fetch('malla.json');
+    const dataNiveles = await response.json();
+
+    // 2. Recorre cada nivel en los datos
+    dataNiveles.forEach(nivelInfo => {
+        // Crea el <section> para el nivel
+        const seccionNivel = document.createElement('section');
+        seccionNivel.className = 'nivel';
+
+        // Crea el <h3> para el título del nivel
+        const tituloNivel = document.createElement('h3');
+        tituloNivel.textContent = `NIVEL ${nivelInfo.nivel}`;
+        seccionNivel.appendChild(tituloNivel);
+
+        // Crea el <ul> para la lista de cursos
+        const listaCursos = document.createElement('ul');
+
+        // 3. Recorre cada curso dentro del nivel
+        nivelInfo.cursos.forEach(cursoInfo => {
+            const esElectivo = cursoInfo.tipo === 'electivo';
+
+            // Crea el <li> para el curso
+            const itemCurso = document.createElement('li');
+            itemCurso.dataset.id = cursoInfo.id;
+            if (cursoInfo.creditos) itemCurso.dataset.creditos = cursoInfo.creditos;
+            if (cursoInfo.prerequisitos) itemCurso.dataset.prerequisitos = cursoInfo.prerequisitos;
+            
+            // Añade las clases correspondientes
+            itemCurso.classList.add(cursoInfo.tipo);
+            if(esElectivo) itemCurso.classList.add('slot-electivo');
+            
+            // Crea el contenido interno del <li>
+            if(esElectivo) {
+                itemCurso.innerHTML = `<span>Arrastra un electivo aquí</span><span class="creditos">${cursoInfo.creditos}</span>`;
+            } else {
+                itemCurso.innerHTML = `<button>${cursoInfo.nombre} <span class="creditos">${cursoInfo.creditos}</span></button>`;
+            }
+
+            listaCursos.appendChild(itemCurso);
+        });
+
+        seccionNivel.appendChild(listaCursos);
+
+        // Crea el <p> para los créditos totales
+        const totalCreditos = document.createElement('p');
+        totalCreditos.className = 'total-creditos';
+        totalCreditos.textContent = `Créditos obligatorios: ${nivelInfo.creditos_obligatorios}`;
+        seccionNivel.appendChild(totalCreditos);
+
+        // 4. Añade la sección del nivel completa al contenedor principal
+        contenedorMalla.appendChild(seccionNivel);
+    });
+}
+
+// Para prerequisitos al pasar el mouse por encima de un curso
+function handleMouseOver(event) {
+    const cursoActual = event.currentTarget;
+    const cursoId = cursoActual.dataset.id;
+    // 1. Resaltar los PRERREQUISITOS de este curso (en azul)
+    const prereqsString = cursoActual.dataset.prerequisitos;
+    if (prereqsString) {
+        // Separa la cadena por comas o barras para obtener todos los IDs
+        const prereqIds = prereqsString.split(/[,|]/).map(id => id.trim());
+        prereqIds.forEach(id => {
+            const prereqElemento = document.querySelector(`li[data-id="${id}"]`);
+            if (prereqElemento) {
+                prereqElemento.classList.add('prerrequisito-highlight');
+            }
+        });
+    }
+    // 2. Resaltar los cursos que ESTE CURSO HABILITA (en verde)
+    const todosLosCursos = document.querySelectorAll('#contenedor-malla li[data-id]');
+    todosLosCursos.forEach(otroCurso => {
+        const otrosPrereqs = otroCurso.dataset.prerequisitos;
+        if (otrosPrereqs && otrosPrereqs.split(/[,|]/).map(id => id.trim()).includes(cursoId)) {
+            otroCurso.classList.add('habilita-highlight');
+        }
+    });
+}
+function handleMouseOut() {
+    const cursosResaltados = document.querySelectorAll('.prerrequisito-highlight, .habilita-highlight');
+    cursosResaltados.forEach(curso => {
+        curso.classList.remove('prerrequisito-highlight', 'habilita-highlight');
+    });
 }

@@ -1,0 +1,121 @@
+[
+  {
+    "nivel": 1,
+    "creditos_obligatorios": 20,
+    "cursos": [
+      { "id": "matematica-basica", "nombre": "MATEMÁTICA BÁSICA", "creditos": 5, "tipo": "generales", "prerequisitos": "" },
+      { "id": "metodologia", "nombre": "METODOLOGÍAS DE INVESTIGACIÓN", "creditos": 3, "tipo": "generales", "prerequisitos": "" },
+      { "id": "desarrollo-personal", "nombre": "DESARROLLO PERSONAL Y SOCIAL", "creditos": 3, "tipo": "generales", "prerequisitos": "" },
+      { "id": "lenguaje-1", "nombre": "LENGUAJE Y COMUNICACIÓN I", "creditos": 4, "tipo": "generales", "prerequisitos": "" },
+      { "id": "intro-ingenieria", "nombre": "INTRODUCCIÓN A LA INGENIERÍA", "creditos": 3, "tipo": "generales", "prerequisitos": "" },
+      { "id": "etica", "nombre": "ÉTICA CÍVICA", "creditos": 2, "tipo": "generales", "prerequisitos": "" }
+    ]
+  },
+  {
+    "nivel": 2,
+    "creditos_obligatorios": 20,
+    "cursos": [
+      { "id": "calculo-1", "nombre": "CÁLCULO I", "creditos": 5, "tipo": "generales", "prerequisitos": "matematica-basica" },
+      { "id": "economia", "nombre": "ECONOMÍA Y EMPRESA", "creditos": 3, "tipo": "generales", "prerequisitos": "" },
+      { "id": "algebra", "nombre": "ÁLGEBRA LINEAL", "creditos": 3, "tipo": "generales", "prerequisitos": "matematica-basica" },
+      { "id": "filosofia", "nombre": "TEMAS DE FILOSOFÍA", "creditos": 3, "tipo": "generales", "prerequisitos": "" },
+      { "id": "lenguaje-2", "nombre": "LENGUAJE Y COMUNICACIÓN II", "creditos": 3, "tipo": "generales", "prerequisitos": "lenguaje-1" },
+      { "id": "procesos-sociales", "nombre": "PROCESOS SOCIALES Y POLÍTICOS", "creditos": 3, "tipo": "generales", "prerequisitos": "" }
+    ]
+  },
+  {
+    "nivel": 3,
+    "creditos_obligatorios": 22,
+    "cursos": [
+      { "id": "ia-aplicada", "nombre": "INTELIGENCIA ARTIFICIAL APLICADA", "creditos": 3, "tipo": "compartido", "prerequisitos": "" },
+      { "id": "calculo-2", "nombre": "CÁLCULO II", "creditos": 5, "tipo": "compartido", "prerequisitos": "calculo-1" },
+      { "id": "orga", "nombre": "SISTEMAS ORGANIZACIONALES", "creditos": 2, "tipo": "compartido", "prerequisitos": "" },
+      { "id": "fisica", "nombre": "FÍSICA PARA SISTEMAS", "creditos": 4, "tipo": "carrera", "prerequisitos": "" },
+      { "id": "estructuras-discretas", "nombre": "ESTRUCTURAS DISCRETAS DE COMPUTACIÓN", "creditos": 4, "tipo": "carrera", "prerequisitos": "" },
+      { "id": "intro-programacion", "nombre": "INTRODUCCIÓN A LA PROGRAMACIÓN", "creditos": 4, "tipo": "carrera", "prerequisitos": "" }
+    ]
+  },
+  {
+    "nivel": 4,
+    "creditos_obligatorios": 21,
+    "cursos": [
+      { "id": "estadistica-probabilidad", "nombre": "ESTADÍSTICA Y PROBABILIDAD", "creditos": 4, "tipo": "compartido", "prerequisitos": "calculo-1" },
+      { "id": "calculo-3", "nombre": "CÁLCULO III", "creditos": 3, "tipo": "compartido", "prerequisitos": "calculo-2" },
+      { "id": "modela-integra-sistemas", "nombre": "MODELACIÓN E INTEGRACIÓN DE SISTEMAS", "creditos": 3, "tipo": "carrera", "prerequisitos": "ia-aplicada" },
+      { "id": "costeo", "nombre": "COSTEO DE OPERACIONES", "creditos": 3, "tipo": "compartido", "prerequisitos": "orga" },
+      { "id": "progra-objetos", "nombre": "PROGRAMACIÓN ORIENTADA A OBJETOS", "creditos": 4, "tipo": "carrera", "prerequisitos": "estructuras-discretas|intro-programacion" },
+      { "id": "arqui-computadoras", "nombre": "ARQUITECTURA DE COMPUTADORAS", "creditos": 4, "tipo": "carrera", "prerequisitos": "fisica" }
+    ]
+  },
+  {
+    "nivel": 5,
+    "creditos_obligatorios": 23,
+    "cursos": [
+      { "id": "estadistica-aplicada", "nombre": "ESTADÍSTICA APLICADA", "creditos": 4, "tipo": "carrera", "prerequisitos": "estadistica-probabilidad" },
+      { "id": "investigacion-operaciones-1", "nombre": "INVESTIGACIÓN DE OPERACIONES I", "creditos": 4, "tipo": "compartido", "prerequisitos": "calculo-3" },
+      { "id": "sistemas-operativos", "nombre": "SISTEMAS OPERATIVOS", "creditos": 4, "tipo": "carrera", "prerequisitos": "arqui-computadoras" },
+      { "id": "des-compe-gerenciales", "nombre": "DESARROLLO DE COMPETENCIAS GERENCIALES", "creditos": 3, "tipo": "carrera", "prerequisitos": "" },
+      { "id": "eda-1", "nombre": "ESTRUCTURA DE DATOS I", "creditos": 4, "tipo": "carrera", "prerequisitos": "progra-objetos" },
+      { "id": "modela-base-datos", "nombre": "MODELAMIENTO DE BASE DE DATOS", "creditos": 4, "tipo": "carrera", "prerequisitos": "progra-objetos" }
+    ]
+  },
+  {
+    "nivel": 6,
+    "creditos_obligatorios": 20,
+    "cursos": [
+      { "id": "ingenieria-procesos-negocio", "nombre": "INGENIERÍA DE PROCESOS DE NEGOCIO", "creditos": 3, "tipo": "carrera", "prerequisitos": "investigacion-operaciones-1" },
+      { "id": "redes-computadoras", "nombre": "REDES DE COMPUTADORAS", "creditos": 4, "tipo": "carrera", "prerequisitos": "sistemas-operativos" },
+      { "id": "simulacion", "nombre": "SIMULACIÓN", "creditos": 3, "tipo": "carrera", "prerequisitos": "modela-integra-sistemas" },
+      { "id": "eda-2", "nombre": "ESTRUCTURA DE DATOS II", "creditos": 4, "tipo": "carrera", "prerequisitos": "eda-1" },
+      { "id": "progra-web", "nombre": "PROGRAMACIÓN WEB", "creditos": 3, "tipo": "carrera", "prerequisitos": "eda-1" },
+      { "id": "gestion-financiera", "nombre": "GESTIÓN FINANCIERA", "creditos": 3, "tipo": "carrera", "prerequisitos": "costeo" },
+      { "id": "electivo-1", "nombre": "ELECTIVO", "creditos": 3, "tipo": "electivo", "prerequisitos": "" }
+    ]
+  },
+  {
+    "nivel": 7,
+    "creditos_obligatorios": 19,
+    "cursos": [
+      { "id": "sistemas-inte-empresarial", "nombre": "SISTEMAS DE INTELIGENCIA EMPRESARIAL", "creditos": 4, "tipo": "carrera", "prerequisitos": "modela-base-datos" },
+      { "id": "gestion-operaciones", "nombre": "GESTIÓN DE OPERACIONES", "creditos": 3, "tipo": "carrera", "prerequisitos": "ingenieria-procesos-negocio" },
+      { "id": "ing-software-1", "nombre": "INGENIERÍA DE SOFTWARE I", "creditos": 4, "tipo": "carrera", "prerequisitos": "modela-base-datos" },
+      { "id": "machine-learning", "nombre": "APRENDIZAJE DE MÁQUINA / MACHINE LEARNING", "creditos": 4, "tipo": "carrera", "prerequisitos": "estadistica-aplicada" },
+      { "id": "ciberseguridad", "nombre": "CIBERSEGURIDAD / CYBERSECURITY", "creditos": 4, "tipo": "carrera", "prerequisitos": "redes-computadoras" },
+      { "id": "electivo-2", "nombre": "ELECTIVO", "creditos": 3, "tipo": "electivo", "prerequisitos": "" }
+    ]
+  },
+  {
+    "nivel": 8,
+    "creditos_obligatorios": 13,
+    "cursos": [
+      { "id": "propuesta-investigacion", "nombre": "PROPUESTA DE INVESTIGACIÓN", "creditos": 3, "tipo": "carrera", "prerequisitos": "simulacion" },
+      { "id": "sistemas-erp", "nombre": "SISTEMAS ERP", "creditos": 3, "tipo": "carrera", "prerequisitos": "gestion-operaciones" },
+      { "id": "auditoria-control-sistemas", "nombre": "AUDITORÍA Y CONTROL DE SISTEMAS", "creditos": 3, "tipo": "carrera", "prerequisitos": "gestion-financiera" },
+      { "id": "ing-software-2", "nombre": "INGENIERÍA DE SOFTWARE II", "creditos": 4, "tipo": "carrera", "prerequisitos": "ing-software-1" },
+      { "id": "electivo-3", "nombre": "ELECTIVO", "creditos": 3, "tipo": "electivo", "prerequisitos": "" },
+      { "id": "electivo-4", "nombre": "ELECTIVO", "creditos": 3, "tipo": "electivo", "prerequisitos": "" }
+    ]
+  },
+  {
+    "nivel": 9,
+    "creditos_obligatorios": 14,
+    "cursos": [
+      { "id": "tesis-1", "nombre": "SEMINARIO DE INVESTIGACIÓN I", "creditos": 4, "tipo": "carrera", "prerequisitos": "propuesta-investigacion" },
+      { "id": "planea-estrategico", "nombre": "PLANEAMIENTO ESTRATÉGICO", "creditos": 3, "tipo": "carrera", "prerequisitos": "" },
+      { "id": "gestion-proyectos", "nombre": "GESTIÓN DE PROYECTOS", "creditos": 3, "tipo": "compartido", "prerequisitos": "auditoria-control-sistemas" },
+      { "id": "seguridad-sistemas", "nombre": "SEGURIDAD DE SISTEMAS", "creditos": 4, "tipo": "carrera", "prerequisitos": "ciberseguridad" },
+      { "id": "electivo-5", "nombre": "ELECTIVO", "creditos": 3, "tipo": "electivo", "prerequisitos": "" }
+    ]
+  },
+  {
+    "nivel": 10,
+    "creditos_obligatorios": 12,
+    "cursos": [
+      { "id": "tesis-2", "nombre": "SEMINARIO DE INVESTIGACIÓN II", "creditos": 4, "tipo": "carrera", "prerequisitos": "tesis-1" },
+      { "id": "gestion-servicios-digitales", "nombre": "GESTIÓN DE SERVICIOS DIGITALES", "creditos": 4, "tipo": "carrera", "prerequisitos": "" },
+      { "id": "proyecto-integrador", "nombre": "PROYECTO INTEGRADOR DE SISTEMAS", "creditos": 4, "tipo": "carrera", "prerequisitos": "gestion-proyectos" },
+      { "id": "electivo-6", "nombre": "ELECTIVO", "creditos": 3, "tipo": "electivo", "prerequisitos": "" },
+      { "id": "electivo-7", "nombre": "ELECTIVO", "creditos": 3, "tipo": "electivo", "prerequisitos": "" }
+    ]
+  }
+]

@@ -1,8 +1,26 @@
-/* Centrado de encabezados */
+:root {
+  --color-primario: #ff7300;      /* Naranja vibrante */
+  --color-fondo: #1e1e1e;         /* Fondo oscuro principal */
+  --color-superficie: #343a40;   /* Fondo de los niveles y la barra */
+  --color-texto-claro: #ffffff;    /* Texto blanco */
+  --color-texto-oscuro: #000000;   /* Texto negro (para cursos 'generales') */
+  --color-texto-suave: #e0e0e0;   /* Un blanco menos intenso para párrafos */
+  --color-acento-azul: #00c3ffa4; /* Para los cursos 'compartidos' */
+  --color-electivo: #ffc164;     /* Para los cursos 'electivos' */
+  --color-completado: #ffb26a;    /* Para los cursos marcados */
+  --color-rojo-borrar: #dc3545;  /* Para el botón de borrar */
+}
+
 header {
+  position: relative;
   text-align: center;
   margin-bottom: 30px;
-  color: #ff7300;
+  color: var(--color-primario);
+}
+
+body {
+  background-color: var(--color-fondo);
+  font-family: Arial, sans-serif;
 }
 
 @keyframes bajarDesdeArriba {
@@ -33,7 +51,7 @@ header {
 .subtitulo {
   font-size: 3em;
   margin-top: 5px;
-  color: #ff7300;
+  color: var(--color-primario);
   font-family: 'Oswald', sans-serif;
   text-shadow: 
     -1px -1px 0 #000,  
@@ -45,17 +63,52 @@ header {
   animation-fill-mode: both;
 }
 
+#btn-reiniciar {
+  background-color: #666f75;
+  color: var(--color-primario);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1em;
+  transition: background-color 0.2s;
+
+  position: absolute;
+  top: 50%; /* Lo centra verticalmente */
+  transform: translateY(-50%);
+  right: 25px; /* Distancia desde el borde derecho */
+  margin-top: 0;
+}
+
+#btn-reiniciar:hover {
+  background-color: #51585e;
+}
+
 /* Contenedor vertical de niveles */
 #contenedor-malla {
   display: flex;
   flex-direction: row; /* horizontal en lugar de vertical */
   gap: 20px;
   overflow-x: auto; /* permite desplazamiento si hay muchos niveles */
-  padding: 20px;
+  padding: 10px;
   scroll-snap-type: x mandatory; /* OPCIONAL */
   align-items: flex-start;
 }
 
+li.bloqueado button {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #555 !important; /* Un fondo oscuro para que resalte menos */
+  color: #aaa !important; /* Un color de texto apagado */
+  text-decoration: none; /* Quita el tachado si es que estaba completado */
+}
+
+/* Evita que el curso "salte" al pasar el ratón si está bloqueado */
+li.bloqueado:hover {
+  transform: none;
+  box-shadow: none;
+}
 
 /* Estilo de cada nivel */
 .nivel {
@@ -67,20 +120,20 @@ header {
   align-items: stretch;
   justify-content: flex-start;
   height: auto;
-  background-color: #fff;
-  border-top: 8px solid #ff7300;
+  background-color: var(--color-superficie);
+  border-top: 8px solid var(--color-primario);
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   scroll-snap-align: start; /* OPCIONAL */
 }
-
 
 .nivel h3 {
   text-align: center;
   font-size: 1.8em;
   margin-bottom: 10px;
   font-family: 'Oswald', sans-serif;
+  color: var(--color-primario);
 }
 
 ul {
@@ -100,8 +153,8 @@ li {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  background-color: #e0e0e0;
-  color: #000;
+  background-color: var(--color-texto-suave);
+  color: var(--color-texto-oscuro);
   font-family: 'Oswald', sans-serif;
   white-space: normal;
   max-width: 220px;
@@ -109,7 +162,7 @@ li {
 }
 
 li:hover {
-  background-color: #ffb26a;
+  background-color: var(--color-completado);
   transform: translateY(-3px); /* se eleva ligeramente */
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
@@ -125,28 +178,25 @@ li.electivo:hover {
 
 
 li.compartido {
-  background-color: #00c3ffa4;
-  color: #000000;
+  background-color: var(--color-acento-azul);
+  color: var(--color-texto-oscuro);
 }
 
 li.generales {
-  background-color: #000;
-  color: #ffffff;
+  background-color: var(--color-texto-oscuro);
+  color: var(--color-texto-claro);
 }
 
-/*electivos*/
 li.electivo {
-  background-color: #ffc164;
-  color: #000000;
+  background-color: var(--color-electivo);
+  color: var(--color-texto-oscuro);
 }
 
-/* Cursos completados */
 li.completado {
   text-decoration: line-through;
-  background-color: #ffb26a !important;
-  color: #313131;
+  background-color: var(--color-completado) !important;
+  color: var(--color-texto-oscuro);
 }
-
 
 p {
     font-family: 'Oswald', sans-serif;
@@ -156,7 +206,7 @@ p {
 /* Créditos individuales */
 .creditos {
   font-weight: bold;
-  color: #ff7300;
+  color: var(--color-primario);
   font-size: 1.1em;
 }
 
@@ -165,20 +215,15 @@ p {
   text-align: right;
   font-weight: bold;
   margin-top: 10px;
-  color: #000000;
+  color: var(--color-primario);
 }
 
-/* Pie de página con electivos */
 footer {
-  margin-top: 40px;
-  padding: 20px;
+  margin-top: 10px;
+  padding: 10px;
   text-align: left;
-  background-color: #f9f9f9;
-  border-top: 2px solid #ccc;
+  background-color: var(--color-fondo);
 }
-
-
-/* --- ESTILOS PARA ELECTIVOS INTERACTIVOS --- */
 
 /* Estilo para los espacios vacíos en la malla */
 .slot-electivo {
@@ -198,14 +243,14 @@ footer {
 
 /* Estilo para el slot cuando un curso ha sido soltado en él */
 .slot-electivo.lleno {
-  background-color: #ffc164 !important; /* Color de fondo de los electivos */
+  background-color: var(--color-electivo) !important; /* Color de fondo de los electivos */
   border: none; /* Quitamos el borde punteado */
   cursor: grab; /* Indica que se puede volver a arrastrar */
   justify-content: space-between; /* Alinea el texto a la izquierda y los créditos a la derecha */
 }
 
 .slot-electivo.lleno span:first-child {
-  color: #000;
+  color: var(--color-texto-oscuro);
   font-style: normal;
   text-align: left;
 }
@@ -218,14 +263,14 @@ footer {
 .electivos-grid {
   max-width: none;
   margin: 0;
-  padding: 30px 20px;
-  background-color: #ffffff;
+  padding: 1px 20px;
+  background-color: var(--color-fondo);
 }
 
 .electivos-grid h3 {
   font-size: 1.8em;
   font-weight: bold;
-  color: #000;
+  color: var(--color-primario);
   margin-bottom: 20px;
   text-align: left;
   font-family: 'Oswald', sans-serif;
@@ -241,8 +286,8 @@ footer {
 }
 
 .bloque-electivo {
-  background-color: #ff7300;
-  color: white;
+  background-color: var(--color-primario);
+  color: var(--color-texto-claro);
   font-weight: bold;
   padding: 10px 12px;
   border-radius: 8px;
@@ -330,6 +375,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 /* barra progreso -----------------------------------------------------------------
@@ -337,8 +383,8 @@ footer {
 /* --- Estilos para la Barra de Progreso --- */
 .progreso-carrera {
   padding: 15px 25px;
-  background-color: #343a40;
-  color: white;
+  background-color: var(--color-superficie);
+  color: var(--color-texto-claro);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   position: sticky;
@@ -362,7 +408,7 @@ footer {
 .barra-interna {
   width: 0%;
   height: 100%;
-  background-color: #ff7300;
+  background-color: var(--color-primario);
   border-radius: 10px;
   transition: width 0.5s ease-out;
 }
@@ -375,8 +421,8 @@ footer {
 }
 
 #menu-borrar button {
-  background-color: #dc3545; /* Un color rojo para indicar "borrar" */
-  color: white;
+  background-color: var(--color-rojo-borrar); /* Un color rojo para indicar "borrar" */
+  color: var(--color-texto-claro);
   border: none;
   padding: 8px 15px;
   border-radius: 5px;
@@ -387,6 +433,20 @@ footer {
 }
 
 #menu-borrar button:hover {
-  background-color: #c82333;
+  background-color: var(--color-rojo-borrar);
+}
 
+li.prerrequisito-highlight button {
+  background-color: #eeff009f !important; /* Azul para "necesitas esto" */
+  color: var(--color-texto-oscuro) !important;
+  transform: scale(1.025);
+  box-shadow: 0 0 5px #ffee009d;
+}
+
+/* Estilo para los cursos que DESBLOQUEA el curso seleccionado */
+li.habilita-highlight button {
+  background-color: #21cf4abb !important; /* Verde para "esto se desbloquea" */
+  color: var(--color-texto-oscuro) !important;
+  transform: scale(1.025);
+  box-shadow: 0 0 10px #26b447b0;
 }
